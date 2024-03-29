@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>each example</title>
+  <script src="./each.js"></script>
+  <style>
+    :root {
+      --spacing: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <form name="addTaskForm">
+    <input name="task" placeholder="Add a new task" required />
+    <button>Add Task</button>
+  </form>
+
+  <ul each="list"></ul>
+
+  <script lang="javascript">
+    const todos = create(
+      // each name을 지정한다.
+      'list', 
+      // create 함수는 element를 반환해야 한다.
+      function create({ id, task }) {
+        const wrapper = document.createElement('div');
+        wrapper.innerText = task;
+        return wrapper;
+      }
+    );
+
+    addTaskForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const data = Object.fromEntries(
+        [...new FormData(this).entries()]
+      );
+      todos.add(data);
+      this.reset();
+    });
+  </script>
+</body>
+</html>
